@@ -1,11 +1,11 @@
 import React from 'react';
 import { Link, NavLink } from 'react-router-dom';
-import './Header.css'
+import './Navbar.css'
 
-const Header = () => {
-    const menuItem =
+const Navbar = () => {
+    const menuItems =
         <>
-            <li><NavLink to='/home' className='rounded-lg'>Home</NavLink></li>
+            <li><NavLink to='/' className='rounded-lg'>Home</NavLink></li>
             <li><NavLink to='/about' className='rounded-lg'> About </NavLink></li>
             <li><NavLink to='/appointment' className='rounded-lg'> Appointment </NavLink></li>
             <li><NavLink to='/reviews' className='rounded-lg'> Reviews </NavLink></li>
@@ -13,7 +13,7 @@ const Header = () => {
         </>
 
     return (
-        <header className='shadow-sm'>
+        <header className='shadow-sm fixed top-0 w-full z-[999] bg-white'>
             <div className="navbar justify-between container">
                 <div>
                     <div className="dropdown">
@@ -21,10 +21,10 @@ const Header = () => {
                             <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h8m-8 6h16" /></svg>
                         </label>
                         <ul tabIndex={0} className="menu menu-compact dropdown-content mt-3 p-2 shadow bg-white rounded-box w-52 ">
-                            {menuItem}
+                            {menuItems}
                         </ul>
                     </div>
-                    <Link to='/'>
+                    <Link to='/' className='text-xl normal-case btn btn-ghost'>
                         Doctors Portal
                     </Link>
                 </div>
@@ -33,15 +33,15 @@ const Header = () => {
 
                     <div className="hidden lg:flex">
                         <ul className="menu menu-horizontal p-0">
-                            {menuItem}
+                            {menuItems}
                         </ul>
                     </div>
 
                     <div className="divider divider-horizontal my-auto hidden lg:block bg-slate-200 w-px h-10 ml-5 mr-10"></div>
 
-                    <Link to='/login' className="btn btn-gradient">Login</Link>
+                    <Link to='/login' className="btn btn-gradient mr-4">Login</Link>
 
-                    <div className="dropdown dropdown-end">
+                    <div className="dropdown dropdown-end mr-4">
                         <div tabIndex={0} className="avatar">
                             <div className="w-12 rounded-full ring ring-neutral ring-offset-base-100 ring-offset-2">
                                 <img src="https://placeimg.com/192/192/people" alt="avatar" />
@@ -58,4 +58,4 @@ const Header = () => {
     );
 };
 
-export default Header;
+export default Navbar;
