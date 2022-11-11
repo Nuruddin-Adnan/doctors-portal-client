@@ -31,7 +31,7 @@ const infos = [
 const InfoCards = () => {
     return (
         <div className='container'>
-            <div className="grid md:grid-cols-3 gap-5">
+            <div className="grid lg:grid-cols-3 md:grid-cols-2 gap-5">
                 {
                     infos.map(info => <InfoCard key={info.id} info={info}></InfoCard>)
                 }

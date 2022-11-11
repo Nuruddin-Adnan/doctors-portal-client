@@ -4,7 +4,7 @@ import bg from '../../../assets/images/bg.png';
 
 const Banner = () => {
     return (
-        <section className="hero py-20 lg:py-32" style={{ background: `url(${bg}) no-repeat center center/cover` }}>
+        <section className="hero py-10 lg:py-32" style={{ background: `url(${bg}) no-repeat center center/cover` }}>
             <div className="hero-content flex-col lg:flex-row-reverse container">
                 <img src={chair} className=" lg:w-1/2 rounded-lg shadow-2xl" alt='chair' />
                 <div>
