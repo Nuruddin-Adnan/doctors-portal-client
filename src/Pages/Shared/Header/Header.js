@@ -1,27 +1,19 @@
 import React from 'react';
 import { Link, NavLink } from 'react-router-dom';
-import logo from '../../../assets/images/logo192.png';
+import './Header.css'
 
 const Header = () => {
     const menuItem =
         <>
-            <li><NavLink to='/home'>Home</NavLink></li>
-            <li tabIndex={0} >
-                <button>
-                    Parent
-                    <svg className="fill-current" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"><path d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z" /></svg>
-                </button>
-                <ul className="p-2 bg-base-100">
-                    <li><Link>Submenu 1</Link></li>
-                    <li><Link>Submenu 2</Link></li>
-                </ul>
-            </li>
-            <li><NavLink to='/item-3'>Item 3</NavLink></li>
+            <li><NavLink to='/home' className='rounded-lg'>Home</NavLink></li>
+            <li><NavLink to='/about' className='rounded-lg'> About </NavLink></li>
+            <li><NavLink to='/appointment' className='rounded-lg'> Appointment </NavLink></li>
+            <li><NavLink to='/reviews' className='rounded-lg'> Reviews </NavLink></li>
+            <li><NavLink to='/contact' className='rounded-lg'> Contact Us </NavLink></li>
         </>
 
     return (
-        <header className='bg-white'>
-
+        <header className='shadow-sm'>
             <div className="navbar justify-between container">
                 <div>
                     <div className="dropdown">
@@ -33,21 +25,21 @@ const Header = () => {
                         </ul>
                     </div>
                     <Link to='/'>
-                        <img src={logo} alt="logo" style={{ maxWidth: '100px' }} />
+                        Doctors Portal
                     </Link>
                 </div>
 
                 <div>
 
                     <div className="hidden lg:flex">
-                        <ul className="menu menu-horizontal p-0 bg-white">
+                        <ul className="menu menu-horizontal p-0">
                             {menuItem}
                         </ul>
                     </div>
 
                     <div className="divider divider-horizontal my-auto hidden lg:block bg-slate-200 w-px h-10 ml-5 mr-10"></div>
 
-                    <Link to='/login' className="btn">Get started</Link>
+                    <Link to='/login' className="btn btn-gradient">Login</Link>
 
                     <div className="dropdown dropdown-end">
                         <div tabIndex={0} className="avatar">
