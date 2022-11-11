@@ -13,7 +13,7 @@ const Navbar = () => {
         </>
 
     return (
-        <header className='shadow-sm fixed top-0 w-full z-[999] bg-white'>
+        <header className='shadow-sm'>
             <div className="navbar justify-between container">
                 <div>
                     <div className="dropdown">
