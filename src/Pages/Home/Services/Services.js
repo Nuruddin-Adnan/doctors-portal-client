@@ -30,8 +30,8 @@ const Services = () => {
     return (
         <section className='container py-20 lg:py-32'>
             <div className='text-center'>
-                <h4 className='text-xl font-bold text-green'>OUR SERVICES</h4>
-                <h5 className='text-3xl text-dark'>Services We Provide</h5>
+                <h4 className='text-xl font-bold text-green mb-2'>OUR SERVICES</h4>
+                <h5 className='text-dark text-4xl'>Services We Provide</h5>
             </div>
             <div className='grid md:grid-cols-2 lg:grid-cols-3 gap-5 mt-10'>
                 {

@@ -1,5 +1,6 @@
 import React from 'react';
 import Banner from '../Banner/Banner';
+import ContactUs from '../ContactUs/ContactUs';
 import ExceptionalDentalCare from '../ExceptionalDentalCare/ExceptionalDentalCare';
 import InfoCards from '../Info/InfoCards';
 import MakeAppointment from '../MakeAppointment/MakeAppointment';
@@ -15,6 +16,7 @@ const Home = () => {
             <ExceptionalDentalCare></ExceptionalDentalCare>
             <MakeAppointment></MakeAppointment>
             <Testimonials></Testimonials>
+            <ContactUs></ContactUs>
         </main>
     );
 };
