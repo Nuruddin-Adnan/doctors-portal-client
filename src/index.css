@@ -16,6 +16,12 @@
         background: linear-gradient(to right, #04C8A4, #03B8D7);
         border-color: transparent;
     }
+
+    @media (min-width: 1536px) {
+        .container {
+            max-width: 1398px;
+        }
+    }
 }
 
 @layer utilities {
