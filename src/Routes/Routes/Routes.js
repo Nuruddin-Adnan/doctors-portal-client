@@ -5,7 +5,7 @@ import Registration from "../../Pages/Auth/Registration/Registration";
 import Home from "../../Pages/Home/Home/Home";
 
 import { createBrowserRouter } from "react-router-dom";
-import Appointment from "../../Pages/Appoinment/Appointment/Appointment";
+import Appointment from "../../Pages/Appointment/Appointment/Appointment";
 
 const router = createBrowserRouter([
     {
