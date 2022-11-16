@@ -19,7 +19,7 @@
 
     .btn-gradient[disabled] {
         color: rgba(255, 255, 255, .6);
-        background: gray;
+        background: #cccccc;
         border-color: transparent;
     }
 
