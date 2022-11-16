@@ -5,10 +5,10 @@ import AvailableAppointments from '../AvailableAppointments/AvailableAppointment
 const Appointment = () => {
     const [selectedDate, setSelectedDate] = useState(new Date());
     return (
-        <mai>
+        <main>
             <AppointmentBanner selectedDate={selectedDate} setSelectedDate={setSelectedDate}></AppointmentBanner>
             <AvailableAppointments selectedDate={selectedDate}></AvailableAppointments>
-        </mai>
+        </main>
     );
 };
 
