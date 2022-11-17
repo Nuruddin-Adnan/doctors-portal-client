@@ -34,12 +34,16 @@ const router = createBrowserRouter([
                 path: '/appointment',
                 element: <Appointment></Appointment>
             },
+            {
+                path: '/dashboard',
+                element: <PrivateRoute><Dashboard></Dashboard></PrivateRoute>
+            }
         ]
     },
-    {
-        path: '/dashboard',
-        element: <PrivateRoute><Dashboard></Dashboard></PrivateRoute>
-    }
+    // {
+    //     path: '/dashboard',
+    //     element: <PrivateRoute><Dashboard></Dashboard></PrivateRoute>
+    // }
 ])
 
 export default router;
