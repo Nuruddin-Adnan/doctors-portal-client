@@ -1,8 +1,19 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Link, NavLink } from 'react-router-dom';
+import { AuthContext } from '../../../contexts/AuthProvider';
 import './Navbar.css'
 
 const Navbar = () => {
+    const { user, logOut } = useContext(AuthContext);
+
+    const handleLogOut = () => {
+        logOut()
+            .then(() => {
+                console.log('logout successfull');
+            })
+            .catch(error => console.error(error.message))
+    }
+
     const menuItems =
         <>
             <li><NavLink to='/' className='rounded-lg'>Home</NavLink></li>
@@ -10,6 +21,7 @@ const Navbar = () => {
             <li><NavLink to='/appointment' className='rounded-lg'> Appointment </NavLink></li>
             <li><NavLink to='/reviews' className='rounded-lg'> Reviews </NavLink></li>
             <li><NavLink to='/contact' className='rounded-lg'> Contact Us </NavLink></li>
+            <li><NavLink to='/dashboard' className='rounded-lg'> Dashboard </NavLink></li>
         </>
 
     return (
@@ -39,19 +51,24 @@ const Navbar = () => {
 
                     <div className="divider divider-horizontal my-auto hidden lg:block bg-slate-200 w-px h-10 ml-5 mr-10"></div>
 
-                    <Link to='/login' className="btn btn-gradient mr-4">Login</Link>
 
-                    <div className="dropdown dropdown-end mr-4">
-                        <div tabIndex={0} className="avatar">
-                            <div className="w-12 rounded-full ring ring-base-300 ring-offset-base-100 ring-offset-2 cursor-pointer">
-                                <img src="https://placeimg.com/192/192/people" alt="avatar" />
+
+                    {
+                        user?.uid ?
+                            <div className="dropdown dropdown-end mr-4">
+                                <div tabIndex={0} className="avatar">
+                                    <div className="w-12 rounded-full ring ring-base-300 ring-offset-base-100 ring-offset-2 cursor-pointer">
+                                        <img src="https://placeimg.com/192/192/people" alt="avatar" />
+                                    </div>
+                                </div>
+                                <ul tabIndex={0} className="menu dropdown-content p-2 shadow bg-base-100 rounded-box w-52 mt-4">
+                                    <li><Link to='/profile'>Profile</Link></li>
+                                    <li><button onClick={handleLogOut}>Logout</button></li>
+                                </ul>
                             </div>
-                        </div>
-                        <ul tabIndex={0} className="menu dropdown-content p-2 shadow bg-base-100 rounded-box w-52 mt-4">
-                            <li><Link to='/profile'>Profile</Link></li>
-                            <li><button>Logout</button></li>
-                        </ul>
-                    </div>
+                            :
+                            <Link to='/login' className="btn btn-gradient mr-4">Login</Link>
+                    }
                 </div>
             </div>
         </header>
