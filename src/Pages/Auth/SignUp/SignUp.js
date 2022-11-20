@@ -1,12 +1,16 @@
 import React, { useContext, useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { Link } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../../contexts/AuthProvider';
 
 const SignUp = () => {
     const { register, handleSubmit, formState: { errors }, reset } = useForm();
     const { notify, createUser, updateUserProfile } = useContext(AuthContext);
     const [signUpError, setSignUpError] = useState('');
+    const navigate = useNavigate();
+    const location = useLocation();
+
+    let from = location.state?.from?.pathname || "/";
 
     const hangleSignup = data => {
         setSignUpError('');
@@ -22,6 +26,7 @@ const SignUp = () => {
                         .then(() => {
                             notify('user create successfully')
                             reset({ data: '' })
+                            navigate(from, { replace: true })
                         }).catch(error => setSignUpError(error.message))
                 }
             })

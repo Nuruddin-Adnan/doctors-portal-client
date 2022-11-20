@@ -5,8 +5,9 @@ import { AuthContext } from '../../../contexts/AuthProvider';
 
 const Login = () => {
     const { register, handleSubmit, formState: { errors }, reset } = useForm();
-    const { signIn, googleSignIn, notify } = useContext(AuthContext);
+    const { signIn, googleSignIn, passwordReset, notify } = useContext(AuthContext);
     const [loginError, setLoginError] = useState('');
+    const [email, setEmail] = useState(null);
     const navigate = useNavigate();
     const location = useLocation();
 
@@ -41,6 +42,21 @@ const Login = () => {
             .catch(error => setLoginError(error.message))
     }
 
+    const handleSetEmail = (event) => {
+        setEmail(event.target.value)
+    }
+
+    const handlePasswordReset = () => {
+        setLoginError('');
+        passwordReset(email)
+            .then(() => {
+                notify('password reset email send to your email. Please check and reset password');
+            })
+            .catch(error => setLoginError(error.message))
+    }
+
+
+
 
     return (
         <section className='lg:py-10 pt-5 lg:pt-10'>
@@ -66,6 +82,7 @@ const Login = () => {
                                     {...register("email", {
                                         required: 'Email field is required'
                                     })}
+                                    onBlur={handleSetEmail}
                                     placeholder="email" className="input input-bordered" />
                                 {
                                     errors.email &&
@@ -90,7 +107,7 @@ const Login = () => {
                                     </label>
                                 }
                                 <label className="label">
-                                    <Link to="/forgot-password" className="label-text-alt link link-hover">Forgot password?</Link>
+                                    <button type='button' onClick={handlePasswordReset} className="label-text-alt link link-hover">Forgot password?</button>
                                 </label>
                             </div>
                             <div className="form-control mt-6">

@@ -10,6 +10,7 @@
     .btn-gradient {
         background: linear-gradient(to right, #19D3AE, #0FCFEC);
         border-color: transparent;
+        color: #fff;
     }
 
     .btn-gradient:hover {
