@@ -2,15 +2,22 @@ import React, { useContext, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../../contexts/AuthProvider';
+import useToken from '../../../hooks/useToken';
 
 const SignUp = () => {
     const { register, handleSubmit, formState: { errors }, reset } = useForm();
     const { notify, createUser, updateUserProfile } = useContext(AuthContext);
     const [signUpError, setSignUpError] = useState('');
+    const [createdUserEmail, setCreatedUserEmail] = useState('')
+    const [token] = useToken(createdUserEmail);
     const navigate = useNavigate();
     const location = useLocation();
 
     let from = location.state?.from?.pathname || "/";
+
+    if (token) {
+        navigate(from, { replace: true })
+    }
 
     const hangleSignup = data => {
         setSignUpError('');
@@ -24,13 +31,32 @@ const SignUp = () => {
                     }
                     updateUserProfile(userInfo)
                         .then(() => {
-                            notify('user create successfully')
-                            reset({ data: '' })
-                            navigate(from, { replace: true })
+                            saveUser(user.displayName, user.email);
                         }).catch(error => setSignUpError(error.message))
                 }
             })
             .catch(error => setSignUpError(error.message))
+    }
+
+    // save user data to database
+    const saveUser = (name, email) => {
+        const createdAt = new Date();
+        const user = { name, email, createdAt };
+        fetch('http://localhost:5000/users', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(user)
+        })
+            .then(res => res.json())
+            .then(data => {
+                if (data) {
+                    notify('user create successfully')
+                    reset({ data: '' })
+                    setCreatedUserEmail(email)
+                }
+            })
     }
 
     return (

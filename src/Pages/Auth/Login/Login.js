@@ -2,16 +2,25 @@ import React, { useContext, useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useForm } from "react-hook-form";
 import { AuthContext } from '../../../contexts/AuthProvider';
+import useToken from '../../../hooks/useToken';
 
 const Login = () => {
     const { register, handleSubmit, formState: { errors }, reset } = useForm();
     const { signIn, googleSignIn, passwordReset, notify } = useContext(AuthContext);
     const [loginError, setLoginError] = useState('');
+
+    const [loginUserEmail, setLoginUserEmail] = useState('');
+    const [token] = useToken(loginUserEmail);
+
     const [email, setEmail] = useState(null);
     const navigate = useNavigate();
     const location = useLocation();
 
     let from = location.state?.from?.pathname || "/";
+
+    if (token) {
+        navigate(from, { replace: true });
+    }
 
     const handleLogin = data => {
         setLoginError('');
@@ -23,7 +32,7 @@ const Login = () => {
                     reset({
                         data: ''
                     });
-                    navigate(from, { replace: true });
+                    setLoginUserEmail(user.email);
                 }
             })
             .catch(error => setLoginError(error.message))
@@ -35,11 +44,43 @@ const Login = () => {
             .then(result => {
                 const user = result.user;
                 if (user) {
-                    navigate(from, { replace: true });
-                    notify('Login successfull');
+                    fetch(`http://localhost:5000/users?email=${user.email}`)
+                        .then(res => res.json())
+                        .then(data => {
+                            if (data.length === 0) {
+                                saveUser(user.displayName, user.email);
+                            }
+                            else {
+                                notify('Login successfull');
+                                setLoginUserEmail(user.email);
+                            }
+                        })
+
                 }
             })
             .catch(error => setLoginError(error.message))
+    }
+
+
+    // save user data to database
+    const saveUser = (name, email) => {
+        const createdAt = new Date();
+        const user = { name, email, createdAt };
+        fetch('http://localhost:5000/users', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(user)
+        })
+            .then(res => res.json())
+            .then(data => {
+                if (data) {
+                    notify('Login successfull');
+                    reset({ data: '' })
+                    setLoginUserEmail(user.email);
+                }
+            })
     }
 
     const handleSetEmail = (event) => {

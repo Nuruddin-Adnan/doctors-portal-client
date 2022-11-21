@@ -10,7 +10,7 @@ const Navbar = () => {
     const handleLogOut = () => {
         logOut()
             .then(() => {
-                console.log('logout successfull');
+                localStorage.removeItem('accessToken');
             })
             .catch(error => console.error(error.message))
     }

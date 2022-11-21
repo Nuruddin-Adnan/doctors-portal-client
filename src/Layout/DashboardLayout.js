@@ -1,7 +1,7 @@
 import React from 'react';
-import { Link, Outlet } from 'react-router-dom';
+import { Link, NavLink, Outlet } from 'react-router-dom';
 import Navbar from '../Pages/Shared/Navbar/Navbar';
-import { AiOutlineDashboard } from 'react-icons/ai';
+import { AiOutlineDashboard, AiOutlineUser } from 'react-icons/ai';
 
 const DashboardLayout = () => {
     return (
@@ -18,6 +18,7 @@ const DashboardLayout = () => {
                     <ul className="menu p-4 w-80 bg-base-100 text-base-content">
                         <li>
                             <Link to='/dashboard'> <AiOutlineDashboard></AiOutlineDashboard> Dashboard</Link>
+                            <NavLink to='/dashboard/allusers'> <AiOutlineUser></AiOutlineUser> All Users</NavLink>
                         </li>
                     </ul>
 

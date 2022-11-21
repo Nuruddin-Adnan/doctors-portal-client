@@ -9,6 +9,7 @@ import SignUp from "../../Pages/Auth/SignUp/SignUp";
 import Dashboard from "../../Pages/Dashboard/Dashboard/Dashboard";
 import PrivateRoute from "../PrivateRoute/PrivateRoute";
 import DashboardLayout from "../../Layout/DashboardLayout";
+import AllUsers from "../../Pages/Dashboard/AllUsers/AllUsers";
 
 const router = createBrowserRouter([
     {
@@ -44,6 +45,10 @@ const router = createBrowserRouter([
             {
                 path: '/dashboard',
                 element: <Dashboard></Dashboard>
+            },
+            {
+                path: '/dashboard/allusers',
+                element: <AllUsers></AllUsers>
             }
         ]
     }
