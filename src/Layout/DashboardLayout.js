@@ -1,9 +1,13 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Link, NavLink, Outlet } from 'react-router-dom';
 import Navbar from '../Pages/Shared/Navbar/Navbar';
 import { AiOutlineDashboard, AiOutlineUser } from 'react-icons/ai';
+import { AuthContext } from '../contexts/AuthProvider';
+import useAdmin from '../hooks/useAdmin';
 
 const DashboardLayout = () => {
+    const { user } = useContext(AuthContext);
+    const [isAdmin] = useAdmin(user.email)
     return (
         <>
             <Navbar></Navbar>
@@ -18,7 +22,12 @@ const DashboardLayout = () => {
                     <ul className="menu p-4 w-80 bg-base-100 text-base-content">
                         <li>
                             <Link to='/dashboard'> <AiOutlineDashboard></AiOutlineDashboard> Dashboard</Link>
-                            <NavLink to='/dashboard/allusers'> <AiOutlineUser></AiOutlineUser> All Users</NavLink>
+                            {
+                                isAdmin && <>
+                                    <NavLink to='/dashboard/allusers'> <AiOutlineUser></AiOutlineUser> All Users</NavLink>
+                                    <NavLink to='/dashboard/adddoctor'> <AiOutlineUser></AiOutlineUser> Add a Doctor</NavLink>
+                                </>
+                            }
                         </li>
                     </ul>
 

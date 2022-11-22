@@ -73,7 +73,7 @@ const BookingModal = ({ treatment, setTreatment, selectedDate, refetch }) => {
                         </div>
                     }
                     <form onSubmit={handleSubmit} className='grid gap-4 mt-5'>
-                        <input type="text" name='date' placeholder="Type here" defaultValue={format(selectedDate, 'PP')} className="input input-bordered w-full" disabled />
+                        <input type="text" name='date' placeholder="Type here" defaultValue={selectedDate && format(selectedDate, 'PP')} className="input input-bordered w-full" disabled />
                         <select className="select select-bordered w-full" name='slot'>
                             {
                                 slots.map((slot, index) => <option key={index} defaultValue={slot}>{slot}</option>)

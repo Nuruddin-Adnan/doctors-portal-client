@@ -1,7 +1,16 @@
 import React from 'react';
+import toast from 'react-hot-toast';
 
-const AppointmentOption = ({ appointmentOption, setTreatment }) => {
+const AppointmentOption = ({ appointmentOption, setTreatment, selectedDate }) => {
     const { name, slots } = appointmentOption;
+    const handleOpenBookingModal = () => {
+        if (!selectedDate) {
+            toast.error('Please select a date');
+            setTreatment(null)
+        } else {
+            setTreatment(appointmentOption)
+        }
+    }
     return (
         <div className="card shadow-xl">
             <div className="card-body items-center text-center">
@@ -16,7 +25,7 @@ const AppointmentOption = ({ appointmentOption, setTreatment }) => {
                     <label
                         htmlFor="booking-modal"
                         className="btn btn-gradient"
-                        onClick={() => setTreatment(appointmentOption)}
+                        onClick={handleOpenBookingModal}
                         disabled={slots.length === 0}
                     >
                         Book Appointment
