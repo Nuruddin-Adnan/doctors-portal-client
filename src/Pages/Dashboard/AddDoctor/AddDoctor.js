@@ -1,17 +1,75 @@
+import { useQuery } from '@tanstack/react-query';
 import React from 'react';
 import { useForm } from 'react-hook-form';
+import toast from 'react-hot-toast';
+import Loading from '../../Shared/Loading/Loading';
 
 const AddDoctor = () => {
-    const { register, handleSubmit, formState: { errors }, reset } = useForm();
+    const { register, handleSubmit, formState: { errors } } = useForm();
+
+    const imageHostKey = process.env.REACT_APP_imgbb_Key;
+
+    const { data: specialities, isLoading } = useQuery({
+        queryKey: ['speciality'],
+        queryFn: async () => {
+            const res = await fetch('http://localhost:5000/appointmentSpeciality')
+            const data = await res.json();
+            return data;
+        }
+    })
+
     const handleAddDoctor = (data) => {
-        console.log(data);
+        const image = data.image[0];
+        const formData = new FormData();
+        formData.append('image', image);
+        const url = `https://api.imgbb.com/1/upload?key=${imageHostKey}`;
+        console.log(url);
+        fetch(url, {
+            method: 'POST',
+            body: formData
+        })
+            .then(res => res.json())
+            .then(imgData => {
+                if (imgData.success) {
+                    const doctor = {
+                        name: data.name,
+                        email: data.email,
+                        speciality: data.speciality,
+                        imgae: imgData.data.url
+                    }
+
+                    // Save doctor information to database
+                    fetch('http://localhost:5000/doctors', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            authorization: `bearer ${localStorage.getItem('accessToken')}`
+                        },
+                        body: JSON.stringify(doctor)
+                    })
+                        .then(res => res.json())
+                        .then(data => {
+                            if (data.acknowledged) {
+                                document.getElementById('addDoctorForm').reset();
+                                toast.success('Doctor Add successfully')
+                            }
+                        })
+                } else {
+                    toast.error('Please upload an image')
+                }
+            })
     }
+
+    if (isLoading) {
+        return <Loading></Loading>
+    }
+
     return (
         <div>
             <h3 className='text-3xl mb-5 font-bold'>Add a New Doctor</h3>
-            <div className="card lg:max-w-sm shadow-xl bg-base-100">
+            <div className="card lg:max-w-md shadow-xl bg-base-100">
                 <div className="card-body">
-                    <form onSubmit={handleSubmit(handleAddDoctor)}>
+                    <form id="addDoctorForm" onSubmit={handleSubmit(handleAddDoctor)}>
                         {/* {
                                 signUpError &&
                                 <div className="alert alert-error shadow-lg">
@@ -49,16 +107,29 @@ const AddDoctor = () => {
                         </div>
                         <div className="form-control">
                             <label className="label">
-                                <span className="label-text">Specialty</span>
+                                <span className="label-text">Speciality</span>
                             </label>
-                            <select className="select select-bordered w-full" {...register("specialty", { required: 'Please Select a Specility' })}>
-                                <option>Han Solo</option>
-                                <option>Greedo</option>
+                            <select className="select select-bordered w-full" {...register("speciality", { required: 'Please Select a Specility' })}>
+                                {
+                                    specialities.map(speciality => <option value={speciality.name} key={speciality._id}>{speciality.name}</option>)
+                                }
                             </select>
                             {
-                                errors.specialty &&
+                                errors.speciality &&
                                 <label className="label">
-                                    <span className="label-text-alt text-error">{errors.specialty?.message}</span>
+                                    <span className="label-text-alt text-error">{errors.speciality?.message}</span>
+                                </label>
+                            }
+                        </div>
+                        <div className="form-control">
+                            <label className="label">
+                                <span className="label-text">Photo</span>
+                            </label>
+                            <input type="file" className="input input-bordered" {...register("image", { required: 'Please Upload an image' })} />
+                            {
+                                errors.image &&
+                                <label className="label">
+                                    <span className="label-text-alt text-error">{errors.image?.message}</span>
                                 </label>
                             }
                         </div>

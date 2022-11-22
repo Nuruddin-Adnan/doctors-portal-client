@@ -39,7 +39,7 @@ const AllUsers = () => {
         <div>
             <h3 className='text-3xl mb-5 font-bold'>All users</h3>
             <div className="overflow-x-auto">
-                <table className="table table-normal w-full">
+                <table className="table table-compact w-full">
                     <thead>
                         <tr>
                             <th></th>

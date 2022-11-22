@@ -29,9 +29,7 @@ const Login = () => {
                 const user = result.user;
                 if (user) {
                     notify('Login successfull');
-                    reset({
-                        data: ''
-                    });
+                    reset({ data: '' });
                     setLoginUserEmail(user.email);
                 }
             })
