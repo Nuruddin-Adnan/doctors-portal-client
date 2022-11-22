@@ -38,7 +38,18 @@ const ManageDoctors = () => {
                         {
                             doctors.map((doctor, index) => <tr key={doctor._id}>
                                 <th>{index + 1}</th>
-                                <td>{doctor?.name}</td>
+                                <td>
+                                    <div className="flex items-center space-x-3">
+                                        <div className="avatar">
+                                            <div className="mask mask-circle w-12 h-12">
+                                                <img src={doctor?.image} alt="Avatar Tailwind CSS Component" />
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <div className="font-bold">{doctor?.name}</div>
+                                        </div>
+                                    </div>
+                                </td>
                                 <td>{doctor?.email}</td>
                                 <td>{doctor?.speciality}</td>
                                 <td><button className='btn btn-sm btn-error'>Delete</button></td>

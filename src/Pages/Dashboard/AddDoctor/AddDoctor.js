@@ -2,9 +2,11 @@ import { useQuery } from '@tanstack/react-query';
 import React from 'react';
 import { useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
+import useTitle from '../../../hooks/useTitle';
 import Loading from '../../Shared/Loading/Loading';
 
 const AddDoctor = () => {
+    useTitle('Add Doctor')
     const { register, handleSubmit, formState: { errors } } = useForm();
 
     const imageHostKey = process.env.REACT_APP_imgbb_Key;
@@ -35,7 +37,7 @@ const AddDoctor = () => {
                         name: data.name,
                         email: data.email,
                         speciality: data.speciality,
-                        imgae: imgData.data.url
+                        image: imgData.data.url
                     }
 
                     // Save doctor information to database
@@ -70,15 +72,6 @@ const AddDoctor = () => {
             <div className="card lg:max-w-md shadow-xl bg-base-100">
                 <div className="card-body">
                     <form id="addDoctorForm" onSubmit={handleSubmit(handleAddDoctor)}>
-                        {/* {
-                                signUpError &&
-                                <div className="alert alert-error shadow-lg">
-                                    <div>
-                                        <svg xmlns="http://www.w3.org/2000/svg" className="stroke-current flex-shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
-                                        <span>{signUpError}</span>
-                                    </div>
-                                </div>
-                            } */}
                         <div className="form-control">
                             <label className="label">
                                 <span className="label-text">Name</span>
@@ -125,7 +118,7 @@ const AddDoctor = () => {
                             <label className="label">
                                 <span className="label-text">Photo</span>
                             </label>
-                            <input type="file" className="input input-bordered" {...register("image", { required: 'Please Upload an image' })} />
+                            <input type="file" className="file-input file-input-bordered w-full" {...register("image", { required: 'Please Upload an image' })} />
                             {
                                 errors.image &&
                                 <label className="label">

@@ -2,6 +2,7 @@ import React, { useContext } from 'react';
 import { Link, NavLink, Outlet } from 'react-router-dom';
 import Navbar from '../Pages/Shared/Navbar/Navbar';
 import { AiOutlineDashboard, AiOutlineUser } from 'react-icons/ai';
+import { MdOutlineManageAccounts, MdOutlineMedicalServices } from 'react-icons/md';
 import { AuthContext } from '../contexts/AuthProvider';
 import useAdmin from '../hooks/useAdmin';
 
@@ -26,8 +27,8 @@ const DashboardLayout = () => {
                                 {
                                     isAdmin && <>
                                         <NavLink to='/dashboard/allusers'> <AiOutlineUser></AiOutlineUser> All Users</NavLink>
-                                        <NavLink to='/dashboard/adddoctor'> <AiOutlineUser></AiOutlineUser> Add a Doctor</NavLink>
-                                        <NavLink to='/dashboard/managedoctors'> <AiOutlineUser></AiOutlineUser> Manage Doctors</NavLink>
+                                        <NavLink to='/dashboard/adddoctor'> <MdOutlineMedicalServices></MdOutlineMedicalServices> Add a Doctor</NavLink>
+                                        <NavLink to='/dashboard/managedoctors'> <MdOutlineManageAccounts></MdOutlineManageAccounts> Manage Doctors</NavLink>
                                     </>
                                 }
                             </li>
