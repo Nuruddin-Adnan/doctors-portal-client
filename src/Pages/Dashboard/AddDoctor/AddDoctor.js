@@ -2,12 +2,14 @@ import { useQuery } from '@tanstack/react-query';
 import React from 'react';
 import { useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
+import { useNavigate } from 'react-router-dom';
 import useTitle from '../../../hooks/useTitle';
 import Loading from '../../Shared/Loading/Loading';
 
 const AddDoctor = () => {
-    useTitle('Add Doctor')
+    useTitle('Add Doctor');
     const { register, handleSubmit, formState: { errors } } = useForm();
+    const navigate = useNavigate();
 
     const imageHostKey = process.env.REACT_APP_imgbb_Key;
 
@@ -54,6 +56,7 @@ const AddDoctor = () => {
                             if (data.acknowledged) {
                                 document.getElementById('addDoctorForm').reset();
                                 toast.success('Doctor Add successfully')
+                                navigate('/dashboard/managedoctors')
                             }
                         })
                 } else {

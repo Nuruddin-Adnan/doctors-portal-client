@@ -1,9 +1,16 @@
 import { useQuery } from '@tanstack/react-query';
-import React from 'react';
+import React, { useState } from 'react';
 import toast from 'react-hot-toast';
+import ConfirmationModal from '../../Shared/ConfirmationModal/ConfirmationModal';
 import Loading from '../../Shared/Loading/Loading';
 
 const AllUsers = () => {
+    const [deletingUser, setDeletingUser] = useState(null);
+
+    const closeModal = () => {
+        setDeletingUser(null);
+    }
+
     const { data: users = [], isLoading, refetch } = useQuery({
         queryKey: ['users'],
         queryFn: async () => {
@@ -29,6 +36,20 @@ const AllUsers = () => {
                 }
             })
 
+    }
+
+    const handleDelete = id => {
+        fetch(`http://localhost:5000/users/${id}`, {
+            method: 'DELETE',
+            headers: {
+                authorization: `bearer ${localStorage.getItem('accessToken')}`
+            }
+        })
+            .then(res => {
+                refetch();
+                toast.success('User Delet Successfully')
+            })
+            .catch(error => toast(error.message))
     }
 
     if (isLoading) {
@@ -64,13 +85,27 @@ const AllUsers = () => {
                                             'Admin'
                                     }
                                 </td>
-                                <td><button className='btn btn-sm btn-error'>Delete</button></td>
+                                <td>
+                                    <label onClick={() => setDeletingUser(user._id)} htmlFor="confirmation-modal" className="btn btn-sm btn-error">Delete</label>
+
+                                    {/* <button onClick={() => handleDelete(user._id)} className='btn btn-sm btn-error'>Delete</button> */}
+                                </td>
                             </tr>)
                         }
 
                     </tbody>
                 </table>
             </div>
+
+            {
+                deletingUser && <ConfirmationModal
+                    title='Are you sure to delete'
+                    message='If you delete you cant revert this back'
+                    closeModal={() => setDeletingUser(null)}
+                    successAction={handleDelete}
+                    modalData={deletingUser}
+                ></ConfirmationModal>
+            }
         </div>
     );
 };
