@@ -2,7 +2,7 @@ import React from 'react';
 import toast from 'react-hot-toast';
 
 const AppointmentOption = ({ appointmentOption, setTreatment, selectedDate }) => {
-    const { name, slots } = appointmentOption;
+    const { name, slots, price } = appointmentOption;
     const handleOpenBookingModal = () => {
         if (!selectedDate) {
             toast.error('Please select a date');
@@ -20,6 +20,7 @@ const AppointmentOption = ({ appointmentOption, setTreatment, selectedDate }) =>
                         <p>{slots[0]}</p> : 'Please Try another day'
                 }
                 <p className='text-sm'>{slots.length} {slots.length > 1 ? 'SPACES' : 'SPACE'} AVAILABL</p>
+                <p className='text-sm'>Price: ${price}</p>
                 <div className="card-actions justify-end">
                     {/* The button to open modal */}
                     <label
