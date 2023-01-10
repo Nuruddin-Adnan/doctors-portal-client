@@ -11,7 +11,7 @@ const CheckoutForm = ({ booking }) => {
     const [transactionId, setTransactionId] = useState('');
     const [clientSecret, setClientSecret] = useState("");
     const [processing, setProcessing] = useState(false);
-    const { price, email, patient } = booking;
+    const { price, email, patient, _id } = booking;
     const stripe = useStripe();
     const elements = useElements();
 
@@ -75,8 +75,31 @@ const CheckoutForm = ({ booking }) => {
         }
 
         if (paymentIntent.status === 'succeeded') {
-            setSuccess('Congrats! your payments completed');
-            setTransactionId(paymentIntent.id);
+            const payment = {
+                price,
+                transactionId: paymentIntent.id,
+                email,
+                bookingId: _id
+            }
+
+            // update on payment collection
+            fetch('http://localhost:5000/payments', {
+                method: 'POST',
+                headers: {
+                    'content-type': 'application/json',
+                    authorization: `bearer ${localStorage.getItem('accessToken')}`
+                },
+                body: JSON.stringify(payment)
+            })
+                .then(res => res.json())
+                .then(data => {
+                    if (data.insertedId) {
+                        setSuccess('Congrats! your payments completed');
+                        setTransactionId(paymentIntent.id);
+                    }
+                })
+
+
         }
         setProcessing(false);
 
@@ -107,7 +130,7 @@ const CheckoutForm = ({ booking }) => {
             <p className='text-red-500'>{cardError}</p>
             {
                 success && <div className='pt-4'>
-                    <p className='text-green-500'>{success}</p>
+                    <p className='text-green'>{success}</p>
                     <p>Your transaction id: <span className='font-bold'>{transactionId}</span></p>
                 </div>
             }
