@@ -42,7 +42,7 @@ const SignUp = () => {
     const saveUser = (name, email) => {
         const createdAt = new Date();
         const user = { name, email, createdAt };
-        fetch('http://localhost:5000/users', {
+        fetch('https://doctors-portal-server-nuruddin-adnan.vercel.app/users', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'

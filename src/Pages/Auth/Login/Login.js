@@ -42,7 +42,7 @@ const Login = () => {
             .then(result => {
                 const user = result.user;
                 if (user) {
-                    fetch(`http://localhost:5000/users?email=${user.email}`)
+                    fetch(`https://doctors-portal-server-nuruddin-adnan.vercel.app/users?email=${user.email}`)
                         .then(res => res.json())
                         .then(data => {
                             if (data.length === 0) {
@@ -64,7 +64,7 @@ const Login = () => {
     const saveUser = (name, email) => {
         const createdAt = new Date();
         const user = { name, email, createdAt };
-        fetch('http://localhost:5000/users', {
+        fetch('https://doctors-portal-server-nuruddin-adnan.vercel.app/users', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
